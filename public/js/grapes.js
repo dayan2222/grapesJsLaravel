@@ -17,6 +17,18 @@ const editor = grapesjs.init({
     //       widthMedia: '480px', // this value will be used in CSS @media
     //   }]
     // },
+
+    deviceManager: {
+        devices: [{
+            name: 'Desktop',
+            width: '', // default size
+        }, {
+            name: 'Mobile',
+            width: '320px', // this value will be used on canvas width
+            widthMedia: '480px', // this value will be used in CSS @media
+        
+        }]
+    },
     // Disable the storage manager for the moment
     // storageManager: false,
     storageManager: {
@@ -86,7 +98,28 @@ const editor = grapesjs.init({
           togglable: false,
         },
       ],
-      }]
+      },
+      {
+        id: 'panel-devices',
+        el: '.panel__devices',
+        buttons: [{
+            id: 'device-desktop',
+            active: true,
+            label: '<span class="fa fa-desktop" style="display: inline-block;"></span>',
+            command: 'set-device-desktop',
+            // Once activated disable the possibility to turn it off
+            togglable: false,
+          }, {
+            id: 'device-mobile',
+            active: false,
+            label: '<span class="fa fa-mobile" style="display: inline-block;"></span>',
+            command: 'set-device-mobile',
+            togglable: false,
+          },
+        ],
+      },
+
+    ]
      }, // end panels
      traitManager: {
       appendTo: '.traits-container',
@@ -153,8 +186,14 @@ const editor = grapesjs.init({
           {
             id: 'button',
             label: 'Button',
-            content: '<button>Click me!</button>',
+            content: '<button style="margin: 5px">Click me!</button>',
             attributes: { class:'gjs-block-button' },
+          },{
+            id: 'link',
+            label: 'Link',
+            content: '<a href="#">Click me!</a>',
+            attributes: { class:'gjs-block-link' },
+
           },
           {
             id: 'video',
@@ -248,13 +287,13 @@ editor.Commands.add('show-styles', {
   },
 });
 
-// // Commands for moile
-// editor.Commands.add('set-device-desktop', {
-//   run: editor => editor.setDevice('Desktop')
-// });
-// editor.Commands.add('set-device-mobile', {
-//   run: editor => editor.setDevice('Mobile')
-// });
+// Commands for moile
+editor.Commands.add('set-device-desktop', {
+  run: editor => editor.setDevice('Desktop')
+});
+editor.Commands.add('set-device-mobile', {
+  run: editor => editor.setDevice('Mobile')
+});
 
 // Define command
 editor.Commands.add('show-traits', {
@@ -287,7 +326,20 @@ editor.Commands.add('block-manager', {
 });
 
 
-
+// Update component
+editor.DomComponents.addType('link', {
+  model: {
+    defaults: {
+      traits: [
+        {
+          type: 'href-next',
+          name: 'href',
+          label: 'New href',
+        },
+      ]
+    }
+  }
+});
 
 
 $(".btn-save").click(function (e) { 
