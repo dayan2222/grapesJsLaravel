@@ -12,10 +12,14 @@
       <div id="gjs"></div>
     </div>
     <div class="panel__right">
+
+      <div class="blocks-container"></div>
+
+
       <div class="layers-container"></div>
       <div class="styles-container"></div>
       <div class="traits-container"></div>
-      <div class="blocks-container"></div>
+      {{-- <div class="blocks-container"></div> --}}
 
     </div>
   </div>

@@ -10,7 +10,10 @@ class saveData extends Model
     use HasFactory;
 
     protected $fillable = [
-        'storeJSON',
-        'gjs_css'
+        'gjs_html',
+        'gjs_css',
+        'gjs_assets',
+        'gjs_styles',
+        'gjs_components',
     ];
 }

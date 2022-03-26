@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GrapesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('grapesjs');
-});
+Route::get('/', [GrapesController::class, 'create']);
+
+Route::get('/grapesjs', [GrapesController::class, 'index']);
+// php artisan make:controller GrapesController --resource

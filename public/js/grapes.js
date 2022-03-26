@@ -41,6 +41,12 @@ const editor = grapesjs.init({
       storeStyles: true,      // Enable/Disable storing of rules in JSON format
       storeHtml: true,        // Enable/Disable storing of components as HTML string
       storeCss: true,         // Enable/Disable storing of rules as CSS string
+      // storeGjs: true,         // Enable/Disable storing of the whole project in JSON format
+      // storeMedia: true,       // Enable/Disable storing of media files
+      // storeOnChange: false,   // Store data on canvas change
+      // storeOnChangeDelay: 500 // Timeout before store method is triggered
+      
+      
     },
     layerManager: {
       appendTo: '.layers-container'
@@ -69,20 +75,30 @@ const editor = grapesjs.init({
         {
         id: 'panel-switcher',
         el: '.panel__switcher',
-        buttons: [{
+        buttons: [
+          
+          {
+            id: 'block-manager',
+            active: true,
+            label: '<span class="fa fa-th-large" style="display: inline-block;"></span>',
+            command: 'block-manager',
+            togglable: false,
+          },
+          {
+            id: 'show-style',
+            active: true,
+            label: '<span class="fa fa-paint-brush" style="display: inline-block;"></span>',
+            command: 'show-styles',
+            togglable: false,
+          },
+          {
             id: 'show-layers',
             active: true,
             label: '<span class="fa fa-bars" style="display: inline-block;"></span>',
             command: 'show-layers',
             // Once activated disable the possibility to turn it off
             togglable: false,
-          }, {
-            id: 'show-style',
-            active: true,
-            label: '<span class="fa fa-paint-brush" style="display: inline-block;"></span>',
-            command: 'show-styles',
-            togglable: false,
-        },
+          },
         {
           id: 'show-traits',
           active: true,
@@ -90,13 +106,6 @@ const editor = grapesjs.init({
           command: 'show-traits',
           togglable: false,
         }, 
-        {
-          id: 'block-manager',
-          active: true,
-          label: '<span class="fa fa-th-large" style="display: inline-block;"></span>',
-          command: 'block-manager',
-          togglable: false,
-        },
       ],
       },
       {
@@ -148,7 +157,7 @@ const editor = grapesjs.init({
         },{
           name: 'Typography',
           open: false,
-          buildProps: ['font-family', 'font-size', 'font-weight', 'letter-spacing', 'color', 'line-height', 'text-shadow'],
+          buildProps: ['font-family', 'font-size', 'text-align','font-weight', 'letter-spacing', 'color', 'line-height', 'text-shadow'],
         },{
           name: 'Decorations',
           open: false,
@@ -166,7 +175,7 @@ const editor = grapesjs.init({
         blocks: [
           {
             id: 'section', // id is mandatory
-            label: "Section", // label is mandatory
+            label: '<span class="fa fa-square-o fa-3x"></span><br> <span style="font-size:20px;">Section</span>', // label is mandatory
             attributes: { class:'gjs-block-section' },
             content: `<section>
               <h1>This is a simple title</h1>
@@ -174,30 +183,30 @@ const editor = grapesjs.init({
             </section>`,
           }, {
             id: 'text',
-            label: 'Text',
+            label: '<span class="fa fa-font fa-3x"></span><br> <span style="font-size:20px;">Text</span>',
             content: '<div data-gjs-type="text">Insert your text here</div>',
           }, {
             id: 'image',
-            label: 'Image',
+            label: '<span class="fa fa-picture-o fa-3x"></span><br> <span style="font-size:20px;">Image</span>',
             select: true,
             content: { type: 'image' },
             activate: true,
           },
           {
             id: 'button',
-            label: 'Button',
+            label: '<span class="fa fa-hand-o-up fa-3x"></span><br> <span style="font-size:20px;">Button</span>',
             content: '<button style="margin: 5px">Click me!</button>',
             attributes: { class:'gjs-block-button' },
           },{
             id: 'link',
-            label: 'Link',
+            label: '<span class="fa fa-link fa-3x"></span><br> <span style="font-size:20px;">Link</span>',
             content: '<a href="#">Click me!</a>',
             attributes: { class:'gjs-block-link' },
 
           },
           {
             id: 'video',
-            label: 'Video',
+            label: '<span class="fa fa-youtube-play fa-3x"></span><br> <span style="font-size:20px;">Video</span>',
             content: {
               type: 'video',
               src: 'img/nfk.mp4',
@@ -287,7 +296,7 @@ editor.Commands.add('show-styles', {
   },
 });
 
-// Commands for moile
+// Commands for Desktop mobile
 editor.Commands.add('set-device-desktop', {
   run: editor => editor.setDevice('Desktop')
 });
@@ -342,10 +351,15 @@ editor.DomComponents.addType('link', {
 });
 
 
+
 $(".btn-save").click(function (e) { 
   e.preventDefault();
   var gjs_html = localStorage.getItem("gjs-html")
   var gjs_css = localStorage.getItem("gjs-css")
+  var gjs_assets = localStorage.getItem("gjs-assets")
+  var gjs_styles = localStorage.getItem("gjs-styles")
+  var gjs_components = localStorage.getItem("gjs-components")
+
 
   Swal.fire({
     title: 'Do you want to save the changes?',
@@ -361,7 +375,10 @@ $(".btn-save").click(function (e) {
         type: "POST",
         data: {
           "html": gjs_html,
-          "css": gjs_css
+          "css": gjs_css,
+          "assets": gjs_assets,
+          "styles": gjs_styles,
+          "components": gjs_components,
         },
         success: function (data) {
           console.log(data);
