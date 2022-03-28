@@ -263,7 +263,7 @@ const editor = grapesjs.init({
         id: 'save',
         className: 'btn-save',
         label: '<span class="fa fa-save" style="display: inline-block;"></span>',
-        command: 'save-template',
+        // command: 'save-template',
       },
     ],
   });
@@ -374,6 +374,7 @@ $(".btn-save").click(function (e) {
         url: "/api/save",
         type: "POST",
         data: {
+          "id": $("#webpageID").val(),
           "html": gjs_html,
           "css": gjs_css,
           "assets": gjs_assets,
@@ -383,11 +384,23 @@ $(".btn-save").click(function (e) {
         success: function (data) {
           console.log(data);
           window.localStorage.clear();
-          Swal.fire(
-            'Saved!',
-            'Your file has been saved.',
-            'success'
-          )
+
+          if (data.status == "success") {
+            Swal.fire({
+              title: 'Success',
+              text: 'Your changes have been saved!',
+              icon: 'success',
+              confirmButtonText: 'OK'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                window.location.href = "/succesPage";
+              }
+            })
+          }
+
+          
+
+
         }
       });
 

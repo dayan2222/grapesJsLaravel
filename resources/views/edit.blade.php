@@ -2,11 +2,14 @@
 
 @section('bodyTag')
 
-<input type="text" value="{{$viewWebPages[0]->gjs_html}}" id="html">
-<input type="text" value="{{$viewWebPages[0]->gjs_css}}" id="css">
-<input type="text" value="{{$viewWebPages[0]->gjs_styles}}" id="styles">
-<input type="text" value="{{$viewWebPages[0]->gjs_components}}" id="components">
-<input type="text" value="{{$viewWebPages[0]->gjs_assets}}" id="assets">
+
+<input type="text" value="{{$viewWebPages->id}}" id="webpageID">
+<input type="text" value="{{$viewWebPages->gjs_html}}" id="html">
+<input type="text" value="{{$viewWebPages->gjs_css}}" id="css">
+<input type="text" value="{{$viewWebPages->gjs_styles}}" id="styles">
+<input type="text" value="{{$viewWebPages->gjs_components}}" id="components">
+<input type="text" value="{{$viewWebPages->gjs_assets}}" id="assets">
+<input type="text" value="{{$viewWebPages->name}}" >
 
   <script>
       
@@ -27,6 +30,7 @@
     
 
   </script>
+
   <div class="panel__top">
     <div class="panel__basic-actions"></div>
     <div class="panel__devices"></div>

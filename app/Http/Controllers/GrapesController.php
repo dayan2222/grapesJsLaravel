@@ -15,30 +15,9 @@ class GrapesController extends Controller
      */
     public function index()
     {
-        //
-        // $viewWebPages = saveData::all();
-        // foreach ($viewWebPages as $value) {
-        //     # code...
-        //     $html = $value->storeJSON;
-        //     echo $html;
-        //     $css = $value->gjs_css;
-        //     echo $css;
-        // }
-        $viewWebPages = saveData::where('id', '=', 30)->get();
-        // dd($viewWebPages);
-        // foreach ($viewWebPages as $value) {
-        //     # code...
-            // $html = $value->storeJSON;
 
-            // echo $html;
-        //     $css = $value->gjs_css;
-        //     echo $css;
-        // }
-       
-        // $viewWebPages[0]->storeJSON;
-        // dd();
-
-        return view('indexGrapesjs', compact('viewWebPages'));
+        $webPages = saveData::all();
+        return view('index', compact('webPages'));
 
     }
 
@@ -85,6 +64,9 @@ class GrapesController extends Controller
     public function edit($id)
     {
         //
+        $viewWebPages = saveData::find($id);
+        
+        return view('edit', compact('viewWebPages'));   
     }
 
     /**
@@ -108,5 +90,8 @@ class GrapesController extends Controller
     public function destroy($id)
     {
         //
+        $webPage = saveData::destroy($id);
+        return redirect('/grapesjs');
+        // return response()->json(['status'=>'success','success' => true]);
     }
 }

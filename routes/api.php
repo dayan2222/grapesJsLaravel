@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SaveResponse;
+use App\Http\Controllers\GrapesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,5 @@ use App\Http\Controllers\SaveResponse;
 // });
 
 Route::post('/save', [App\Http\Controllers\SaveResponse::class, 'save']);
+Route::post('/getName', [App\Http\Controllers\SaveResponse::class, 'getName']);
+Route::delete('/destroy/{id}', [GrapesController::class, 'destroy'])->name('webpage.destroy');

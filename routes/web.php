@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GrapesController;
+use App\Http\Controllers\SaveResponse;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,15 @@ use App\Http\Controllers\GrapesController;
 */
 
 Route::get('/', [GrapesController::class, 'create']);
+Route::post('/webpageName', [SaveResponse::class, 'index']);
 
 Route::get('/grapesjs', [GrapesController::class, 'index']);
+Route::get('/edit/{id}', [GrapesController::class, 'edit'])->name('webpage.edit');
+
+
+
+Route::get('/succesPage', function (){
+    # code...
+    return "Done";
+});
 // php artisan make:controller GrapesController --resource
